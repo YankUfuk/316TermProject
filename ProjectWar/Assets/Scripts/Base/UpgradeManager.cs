@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class UpgradeManager : MonoBehaviour
 {
     public GameObject turretPrefab;
-    public Transform[] turretPoints; // 3 farklı spawn noktası
+    public Transform[] turretPoints;
     public int[] upgradeCosts = { 30, 50, 80 };
 
     public MoneySystem moneySystem;
@@ -30,11 +30,10 @@ public class UpgradeManager : MonoBehaviour
         {
             moneySystem.SpendMoney(cost);
 
-            // Yeni turret ekle
+
             Instantiate(turretPrefab, turretPoints[upgradeLevel].position, turretPoints[upgradeLevel].rotation);
             upgradeLevel++;
 
-            // Fiyat UI’sini güncelle
             UpdatePriceUI();
         }
     }
@@ -48,7 +47,7 @@ public class UpgradeManager : MonoBehaviour
         else
         {
             priceText.text = "Max";
-            upgradeButton.interactable = false; // Butonu pasifleştir
+            upgradeButton.interactable = false;
         }
     }
 }
