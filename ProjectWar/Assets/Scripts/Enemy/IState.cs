@@ -1,6 +1,5 @@
-using UnityEngine;
-
-public class IState : MonoBehaviour
-{
-    
+public interface IState {
+    void Enter();
+    void Tick();
+    void Exit();
 }
