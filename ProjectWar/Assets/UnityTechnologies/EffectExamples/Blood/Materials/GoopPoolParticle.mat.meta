@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 22b5e8b1b3dff1e4c987cd87693e7be5
+timeCreated: 1473848207
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 127325
+  packageName: Particle Pack
+  packageVersion: 3.1
+  assetPath: Assets/UnityTechnologies/EffectExamples/Blood/Materials/GoopPoolParticle.mat
+  uploadId: 691001
