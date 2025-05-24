@@ -11,6 +11,7 @@ public class GameOverManager : MonoBehaviour
         defeatPanel.SetActive(false);
         victoryPanel.SetActive(false);
     }
+
     public void GameOver(bool playerBase)
     {
         Time.timeScale = 0f;
