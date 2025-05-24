@@ -7,6 +7,10 @@ TagManager:
   - Target
   - Wall
   - EnemyTestUse
+  - FxTemporaire
+  - PlayerBase
+  - EnemyBase
+  - PlayerUnit
   layers:
   - Default
   - TransparentFX
