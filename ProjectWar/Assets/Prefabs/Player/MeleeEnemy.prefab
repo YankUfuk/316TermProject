@@ -155,11 +155,11 @@ GameObject:
   - component: {fileID: 3465761247990236198}
   m_Layer: 0
   m_Name: MeleeEnemy
-  m_TagString: Untagged
+  m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8618314598699336645
 Transform:
   m_ObjectHideFlags: 0
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 7662829166889624541}
   - component: {fileID: 4753968410139196856}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MeleeCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 4387302859793137280}
   - component: {fileID: 2296142114221344397}
   m_Layer: 0
-  m_Name: DummyWeapon
+  m_Name: MeleeWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -408,8 +408,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.32, z: 1.12}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8498362882649730590}
+  m_Children: []
   m_Father: {fileID: 8618314598699336645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8131370204475186461
@@ -498,46 +497,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19e88f475292d349aa00402fb30bbf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponClass: 2
   playerCamera: {fileID: 6935655450023047474}
+  playerBulletPrefab: {fileID: 0}
+  playerBulletSpawn: {fileID: 0}
+  tankCamera: {fileID: 0}
+  tankShellPrefab: {fileID: 0}
+  tankShellSpawn: {fileID: 0}
+  tankBody: {fileID: 0}
+  tankTurret: {fileID: 0}
+  tankMoveSpeed: 8
+  turretRotateSpeed: 60
+  turretMinPitch: -5
+  turretMaxPitch: 15
+  crosshairUI: {fileID: 0}
+  crosshairMaxDistance: 1000
+  cameraOrbitSpeed: 60
+  meleeKey: 104
+  meleeRange: 2
+  meleeDelay: 0.6
+  meleeHitLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  animator: {fileID: 0}
   isShooting: 0
   readyToShoot: 0
   shootingDelay: 0.2
   bulletsPerBurst: 3
-  burstBulletsLeft: 0
   spreadIntensity: 0.1
-  bulletPrefab: {fileID: 2277805726131954121, guid: edcf114591e3d6b4ebf5bf9ed2d500b7, type: 3}
-  bulletSpawn: {fileID: 8498362882649730590}
   bulletVelocity: 500
   bulletPrefabLifeTime: 3
   currentShootingMode: 2
---- !u!1 &8473380529148198142
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8498362882649730590}
-  m_Layer: 0
-  m_Name: BulletSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8498362882649730590
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8473380529148198142}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.37, z: 0.789}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4092698222388691695}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

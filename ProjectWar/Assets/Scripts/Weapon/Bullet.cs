@@ -7,15 +7,12 @@ public class Bullet : MonoBehaviour
     {
         if (objectWeHit.gameObject.CompareTag("Target"))
         {
-            print("hit " + objectWeHit.gameObject.name + " !");
-            
             CreateBulletImpactEffect(objectWeHit);
             Destroy(gameObject);
         }
         
         if (objectWeHit.gameObject.CompareTag("Wall"))
         {
-            print("hit a wall");
             CreateBulletImpactEffect(objectWeHit);
             Destroy(gameObject);
         }

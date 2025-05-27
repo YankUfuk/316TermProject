@@ -11,6 +11,8 @@ TagManager:
   - PlayerBase
   - EnemyBase
   - PlayerUnit
+  - Troop
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Wall
   - 
   - 
   - 

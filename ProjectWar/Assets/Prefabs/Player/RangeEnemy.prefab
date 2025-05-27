@@ -41,15 +41,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1782559930449372955}
   - component: {fileID: 3953289959268052206}
-  - component: {fileID: 2492599232644335723}
   - component: {fileID: 4318734598979202341}
+  - component: {fileID: 2492599232644335723}
   m_Layer: 0
   m_Name: RangeEnemy
-  m_TagString: Untagged
+  m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1782559930449372955
 Transform:
   m_ObjectHideFlags: 0
@@ -94,6 +94,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4318734598979202341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364555492183000582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6aed0c5914667488677d3f9ad8c458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseSensitivity: 500
+  topClamp: -90
+  bottomClamp: 90
 --- !u!114 &2492599232644335723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,21 +129,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &4318734598979202341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6364555492183000582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c6aed0c5914667488677d3f9ad8c458, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivity: 500
-  topClamp: -90
-  bottomClamp: 90
 --- !u!1 &7438231494302996788
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 202315827539155368}
   - component: {fileID: 2389795002250868942}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: RangeCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 7668587992373774743}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.7, z: 0}
+  m_LocalPosition: {x: 0, y: 1.84, z: 0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,14 +325,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7683544800498196240}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.32, z: 1.12}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalRotation: {x: -0, y: -0.09526637, z: -0, w: 0.9954518}
+  m_LocalPosition: {x: 1.2980499, y: 1.3199999, z: 1.03}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6954426302934367528}
   m_Father: {fileID: 1782559930449372955}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -10.933, z: 0}
 --- !u!33 &530622250020155332
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -340,7 +340,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7683544800498196240}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 7350c439920074a58a63ca710c013777, type: 3}
 --- !u!23 &117428186948216224
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -419,15 +419,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19e88f475292d349aa00402fb30bbf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponClass: 0
   playerCamera: {fileID: 4681256211965300544}
+  playerBulletPrefab: {fileID: 2277805726131954121, guid: edcf114591e3d6b4ebf5bf9ed2d500b7, type: 3}
+  playerBulletSpawn: {fileID: 6954426302934367528}
+  tankCamera: {fileID: 0}
+  tankShellPrefab: {fileID: 0}
+  tankShellSpawn: {fileID: 0}
+  tankBody: {fileID: 0}
+  tankTurret: {fileID: 0}
+  tankMoveSpeed: 8
+  turretRotateSpeed: 60
+  turretMinPitch: -5
+  turretMaxPitch: 15
+  crosshairUI: {fileID: 0}
+  crosshairMaxDistance: 1000
+  cameraOrbitSpeed: 60
+  meleeKey: 101
+  meleeRange: 2
+  meleeDelay: 0.6
+  meleeHitLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  animator: {fileID: 0}
   isShooting: 0
   readyToShoot: 0
   shootingDelay: 0.2
   bulletsPerBurst: 3
-  burstBulletsLeft: 0
   spreadIntensity: 0.1
-  bulletPrefab: {fileID: 2277805726131954121, guid: edcf114591e3d6b4ebf5bf9ed2d500b7, type: 3}
-  bulletSpawn: {fileID: 6954426302934367528}
   bulletVelocity: 500
   bulletPrefabLifeTime: 3
   currentShootingMode: 2
