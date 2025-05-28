@@ -4,7 +4,7 @@ public class MeleeEnemy : Enemy
 {
     [Header("AI")]
     [Tooltip("Tag given to all other troop units this AI should hunt")]
-    [SerializeField] private string troopTag = "Troop";
+    [SerializeField] private string troopTag = "TroopEnemy";
 
     private EnemyStateMachine _sm;
     private IState            _chaseState;

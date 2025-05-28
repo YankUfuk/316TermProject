@@ -22,10 +22,7 @@ public class Enemy : MonoBehaviour
     public float AttackRange    => attackRange;
     public Transform FirePoint  => firePoint;
     public LayerMask ObstacleMask => obstacleMask;
-
-    /// <summary>
-    /// Distance from this enemy to the player (or float.MaxValue if not found)
-    /// </summary>
+    
     public float DistanceToPlayer
     {
         get
@@ -35,10 +32,7 @@ public class Enemy : MonoBehaviour
             return Vector3.Distance(transform.position, player.transform.position);
         }
     }
-
-    /// <summary>
-    /// Shortcut to the player's transform (or null if not found)
-    /// </summary>
+    
     public Transform PlayerPosition
     {
         get
@@ -47,10 +41,7 @@ public class Enemy : MonoBehaviour
             return player != null ? player.transform : null;
         }
     }
-
-    /// <summary>
-    /// Raycasts from start to end, returns true if no obstacle blocks.
-    /// </summary>
+    
     public bool HasLineOfSight(Vector3 start, Vector3 end)
     {
         var direction = (end - start).normalized;
@@ -69,13 +60,29 @@ public class Enemy : MonoBehaviour
             agent.stoppingDistance = attackRange * 0.9f;
         }
     }
-
+    
     public void MoveTo(Vector3 worldPos)
     {
         if (agent != null)
-            agent.SetDestination(worldPos);
+        {
+            // Try to find the nearest NavMesh point to worldPos
+            NavMeshHit hit;
+            const float maxSampleDistance = 10f;  // search radius in world units
+            if (NavMesh.SamplePosition(worldPos, out hit, maxSampleDistance, NavMesh.AllAreas))
+            {
+                agent.isStopped = false;
+                agent.SetDestination(hit.position);
+                Debug.Log($"[{name}] MoveTo: sampled NavMesh at {hit.position}");
+            }
+            else
+            {
+                Debug.LogWarning($"[{name}] MoveTo: target {worldPos} not on NavMesh (within {maxSampleDistance}m)");
+                agent.isStopped = true;
+            }
+        }
         else
         {
+            // Fallback mode
             Vector3 dir = (worldPos - transform.position).normalized;
             transform.position += dir * moveSpeed * Time.deltaTime;
         }

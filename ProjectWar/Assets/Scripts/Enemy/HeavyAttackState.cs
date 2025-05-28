@@ -24,7 +24,6 @@ public class HeavyAttackState : StateBase
 
     public override void Tick()
     {
-        // 1) If no target or out of attack range, go back to chasing
         var target = _heavy.CurrentTarget;
         if (target == null ||
             Vector3.Distance(_heavy.transform.position, target.position) > _heavy.AttackRange)
@@ -33,12 +32,11 @@ public class HeavyAttackState : StateBase
             return;
         }
 
-        // 2) Time to blast?
         if (Time.time - _lastAttackTime >= _heavy.AttackCooldown)
-        {
-            _heavy.DoAreaBlast();
-            _lastAttackTime = Time.time;
-        }
+            {
+                _heavy.ShootShell(_heavy.CurrentTarget.position);
+                _lastAttackTime = Time.time;
+            }
     }
 
     public override void Exit()

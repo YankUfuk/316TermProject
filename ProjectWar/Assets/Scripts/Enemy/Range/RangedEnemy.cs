@@ -4,7 +4,7 @@ public class RangedEnemy : Enemy
 {
     [Header("AI Tags & Layers")]
     [Tooltip("Tag of the player to target")]
-    [SerializeField] private string playerTag = "Player";
+    [SerializeField] private string playerTag = "TroopEnemy";
     [Tooltip("Tag of cover spot objects")]
     [SerializeField] private string coverTag  = "Cover";
 

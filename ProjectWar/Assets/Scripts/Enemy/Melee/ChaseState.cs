@@ -15,22 +15,29 @@ public class ChaseState : IState
 
     public void Enter() {
         AcquireTarget();
-        if (_enemy.CurrentTarget != null)
+        if (_enemy.CurrentTarget != null) 
+        {
+            _enemy.Agent.isStopped = false;  // make extra sure it’s running
             _enemy.MoveTo(_enemy.CurrentTarget.position);
+        } 
+        else 
+        {
+            Debug.Log($"[{_enemy.name}] no targets found");
+            _enemy.Agent.isStopped = true;
+        }
     }
 
-    public void Tick() {
-        var tgt = _enemy.CurrentTarget;
-        if (tgt == null || IsDead(tgt)) {
-            AcquireTarget();
-            // if no more targets, just stop moving
-            if (_enemy.CurrentTarget == null) {
-                _enemy.Agent.isStopped = true;
-                return;
-            }
-        }
-        // always refresh destination (in case the target moves)
+    public void Tick()
+    {
+        if (_enemy.CurrentTarget == null) { /* reacquire… */ }
+
         _enemy.MoveTo(_enemy.CurrentTarget.position);
+
+        // **see what the agent thinks it’s doing**
+        var a = _enemy.Agent;
+        Debug.Log($"[{_enemy.name}] Tick: onNavMesh={a.isOnNavMesh} " +
+                  $"hasPath={a.hasPath} pathPending={a.pathPending} " +
+                  $"remainingDist={a.remainingDistance}");
     }
 
     public void Exit() {
