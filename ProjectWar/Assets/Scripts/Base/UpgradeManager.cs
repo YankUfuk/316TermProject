@@ -12,6 +12,9 @@ public class UpgradeManager : MonoBehaviour
     public TextMeshProUGUI priceText;
     public Button upgradeButton;
 
+    public AudioClip upgradeSound;
+    public AudioSource audioSource;
+
     private int upgradeLevel = 0;
 
     void Start()
@@ -22,9 +25,16 @@ public class UpgradeManager : MonoBehaviour
 
     public void BuyUpgrade()
     {
-        if (upgradeLevel >= upgradeCosts.Length) return;
+
+
+        if (upgradeLevel >= upgradeCosts.Length)
+        {
+
+            return;
+        }
 
         int cost = upgradeCosts[upgradeLevel];
+
 
         if (moneySystem.money >= cost)
         {
@@ -34,9 +44,19 @@ public class UpgradeManager : MonoBehaviour
             Instantiate(turretPrefab, turretPoints[upgradeLevel].position, turretPoints[upgradeLevel].rotation);
             upgradeLevel++;
 
+
+
+            if (audioSource != null && upgradeSound != null)
+            {
+
+                audioSource.PlayOneShot(upgradeSound);
+            }
+
             UpdatePriceUI();
         }
+
     }
+
 
     void UpdatePriceUI()
     {
