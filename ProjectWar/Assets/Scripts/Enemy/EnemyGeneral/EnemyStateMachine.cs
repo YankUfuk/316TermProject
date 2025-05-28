@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EnemyStateMachine {
     public IState CurrentState { get; private set; }
     public void Initialize(IState startingState) {
@@ -7,6 +9,8 @@ public class EnemyStateMachine {
     public void ChangeState(IState newState) {
         CurrentState.Exit();
         CurrentState = newState;
+        Debug.Log($"[StateMachine] Ticking state: {CurrentState.GetType().Name}");
+
         CurrentState.Enter();
     }
     public void Tick() {

@@ -24,7 +24,15 @@ public class BaseHealth : MonoBehaviour
             FindObjectOfType<GameOverManager>().GameOver(isPlayerBase);
         }
     }
-
+    
+    public void IncreaseHealth(float amount)
+    {
+        currentHealth += Mathf.RoundToInt(amount);
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        UpdateUI();
+    }
+    
     void UpdateUI()
     {
         if (healthBar != null)

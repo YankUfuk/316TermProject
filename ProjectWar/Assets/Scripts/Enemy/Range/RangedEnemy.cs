@@ -11,7 +11,7 @@ public class RangedEnemy : Enemy
     [Header("Weapon Settings")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float      projectileSpeed = 15f;
-    [SerializeField] private float      fireRate        = 1f;  // shots per second
+    [SerializeField] private float      fireRate        = 1f;  
 
     private EnemyStateMachine _sm;
 
@@ -20,13 +20,22 @@ public class RangedEnemy : Enemy
     private void Start()
     {
         _sm = new EnemyStateMachine();
-        _sm.Initialize(new FindCoverState(this, _sm, playerTag, coverTag));
+        _sm.Initialize(
+            new RangedCoverState(
+                this, 
+                _sm,
+                playerTag,  
+                coverTag    
+            )
+        );
     }
 
     private void Update()
-    {
+    { 
+        Debug.Log($"[{name}] Current State: {_sm.CurrentState.GetType().Name}");
         _sm.Tick();
     }
+
     
     public void FireAt(Vector3 targetPos)
     {

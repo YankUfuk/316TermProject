@@ -33,7 +33,7 @@ public class BulletTest : MonoBehaviour
 
     void HitTarget()
     {
-        EnemyHealthTest eh = target.GetComponent<EnemyHealthTest>();
+        EnemyHealth eh = target.GetComponent<EnemyHealth>();
         if (eh != null)
         {
             eh.TakeDamage(damage);

@@ -14,13 +14,13 @@ public class UnitCombat : MonoBehaviour
         {
             if (other.CompareTag("EnemyTestUse"))
             {
-                var enemyHealth = other.GetComponent<EnemyHealthTest>();
+                var enemyHealth = other.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                     enemyHealth.TakeDamage(damage);
             }
             else if (other.CompareTag("PlayerUnit"))
             {
-                var health = other.GetComponent<EnemyHealthTest>();
+                var health = other.GetComponent<EnemyHealth>();
                 if (health != null)
                     health.TakeDamage(damage);
             }

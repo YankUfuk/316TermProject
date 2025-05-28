@@ -4,23 +4,25 @@ public class RangedAttackState : StateBase
 {
     private readonly Transform _player;
     private readonly string    _coverTag;
+    private readonly Transform _coverSpot; 
     private float              _lastFireTime;
 
     public RangedAttackState(
         Enemy enemy,
         EnemyStateMachine sm,
         Transform player,
-        string coverTag
+        string coverTag,
+        Transform coverSpot 
     ) : base(enemy, sm)
     {
         _player      = player;
         _coverTag    = coverTag;
+        _coverSpot   = coverSpot; 
         _lastFireTime = Time.time;
     }
 
     public override void Enter()
     {
-        // stop in cover, ready to fire
         enemy.Agent.isStopped = true;
     }
 
@@ -28,23 +30,23 @@ public class RangedAttackState : StateBase
     {
         if (_player == null) return;
 
-        // 1) If LOS breaks, search for new cover
         if (!enemy.HasLineOfSight(enemy.FirePoint.position, _player.position))
         {
-            sm.ChangeState(new FindCoverState(
-                enemy,
+            sm.ChangeState(new RangedShootOutState(
+                (RangedEnemy)enemy,
                 sm,
                 _player.tag,
-                _coverTag
+                _coverTag,              // pass along the same tag string you used in your CoverState
+                _coverSpot.position,
+                enemy.AttackRange
             ));
+
             return;
         }
 
-        // 2) Face the player
         var lookDir = (_player.position - enemy.transform.position).normalized;
         enemy.transform.rotation = Quaternion.LookRotation(lookDir);
 
-        // 3) Fire at fixed rate
         var re = (RangedEnemy)enemy;
         if (Time.time - _lastFireTime >= 1f / re.FireRate)
         {
@@ -55,6 +57,6 @@ public class RangedAttackState : StateBase
 
     public override void Exit()
     {
-        // cleanup (lower weapon, reset anim)…
+        // cleanup
     }
 }

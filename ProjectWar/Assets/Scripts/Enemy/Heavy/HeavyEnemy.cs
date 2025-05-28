@@ -57,23 +57,6 @@ public class HeavyEnemy : Enemy
         _sm.Tick();
     }
     
-    public void DoAreaBlast()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, areaRadius);
-        foreach (var col in hits)
-        {
-            if (col.gameObject == gameObject) 
-                continue;
-            
-            var h = col.GetComponent<EnemyHealthTest>();
-            if (h != null)
-            {
-                Debug.Log($"[{name}] blasting {col.name}");
-                h.TakeDamage((int)blastDamage);
-            }
-        }
-    }
-    
     public void ShootShell(Vector3 targetPos)
     {
         if (shellPrefab == null || FirePoint == null) return;
@@ -83,7 +66,11 @@ public class HeavyEnemy : Enemy
             FirePoint.position,
             Quaternion.LookRotation(dir));
         if (shell.TryGetComponent<Rigidbody>(out var rb))
-            rb.linearVelocity = dir * shellSpeed;
+            {
+                rb.linearVelocity = dir * shellSpeed;
+            }
+        
+        shell.AddComponent<DestroyOnCollision>();
     }
     private class DestroyOnCollision : MonoBehaviour
     {

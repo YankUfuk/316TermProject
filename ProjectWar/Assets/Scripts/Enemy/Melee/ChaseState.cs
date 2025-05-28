@@ -61,7 +61,7 @@ public class ChaseState : IState
     }
 
     private bool IsDead(Transform t) {
-        var h = t.GetComponent<EnemyHealthTest>();
+        var h = t.GetComponent<EnemyHealth>();
         return h != null && h.currentHealth <= 0;
     }
 }

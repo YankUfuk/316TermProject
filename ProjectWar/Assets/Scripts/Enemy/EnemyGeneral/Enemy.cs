@@ -9,12 +9,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed   = 2f;
     [SerializeField] private Transform firePoint;
 
-    // optional obstacle mask for LOS checks
     [Header("General Settings")]
     [Tooltip("Layers that block line of sight")]
     [SerializeField] private LayerMask obstacleMask;
 
-    // your NavMeshAgent
     protected NavMeshAgent agent;
     public NavMeshAgent Agent => agent;
 
@@ -22,7 +20,7 @@ public class Enemy : MonoBehaviour
     public float AttackRange    => attackRange;
     public Transform FirePoint  => firePoint;
     public LayerMask ObstacleMask => obstacleMask;
-    
+
     public float DistanceToPlayer
     {
         get
@@ -32,7 +30,7 @@ public class Enemy : MonoBehaviour
             return Vector3.Distance(transform.position, player.transform.position);
         }
     }
-    
+
     public Transform PlayerPosition
     {
         get
@@ -41,7 +39,7 @@ public class Enemy : MonoBehaviour
             return player != null ? player.transform : null;
         }
     }
-    
+
     public bool HasLineOfSight(Vector3 start, Vector3 end)
     {
         var direction = (end - start).normalized;
@@ -58,31 +56,34 @@ public class Enemy : MonoBehaviour
         {
             agent.speed            = moveSpeed;
             agent.stoppingDistance = attackRange * 0.9f;
+
+            // Snap the agent onto the NavMesh at start
+            NavMeshHit startHit;
+            if (NavMesh.SamplePosition(transform.position, out startHit, 5f, NavMesh.AllAreas))
+            {
+                agent.Warp(startHit.position);
+            }
         }
     }
-    
+
     public void MoveTo(Vector3 worldPos)
     {
         if (agent != null)
         {
-            // Try to find the nearest NavMesh point to worldPos
             NavMeshHit hit;
-            const float maxSampleDistance = 10f;  // search radius in world units
+            const float maxSampleDistance = 10f;
             if (NavMesh.SamplePosition(worldPos, out hit, maxSampleDistance, NavMesh.AllAreas))
             {
                 agent.isStopped = false;
                 agent.SetDestination(hit.position);
-                Debug.Log($"[{name}] MoveTo: sampled NavMesh at {hit.position}");
             }
             else
             {
-                Debug.LogWarning($"[{name}] MoveTo: target {worldPos} not on NavMesh (within {maxSampleDistance}m)");
                 agent.isStopped = true;
             }
         }
         else
         {
-            // Fallback mode
             Vector3 dir = (worldPos - transform.position).normalized;
             transform.position += dir * moveSpeed * Time.deltaTime;
         }
