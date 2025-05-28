@@ -733,7 +733,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -500, y: -434}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &86149356
@@ -1671,8 +1671,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdeb8d1d33e4984f860eeef75ecd9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  spawnLocation: {fileID: 0}
+  objectToSpawn: {fileID: 6477775855229789627, guid: e025ea1baa9807e40a8f0a92928974c9, type: 3}
+  spawnLocation: {fileID: 1713276731}
   price: 30
   moneySystem: {fileID: 0}
   clickSound: {fileID: 8300000, guid: e74064d0ba6e74645b7248674e0259db, type: 3}
@@ -3707,7 +3707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -225, y: -279}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &490559042
@@ -3859,12 +3859,24 @@ PrefabInstance:
       value: CameraRig
       objectReference: {fileID: 0}
     - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
+      propertyPath: fastSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
+      propertyPath: normalSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: zoomAmount.y
       value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: zoomAmount.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
+      propertyPath: movementSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 2609714976200178243, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: rotationAmount
@@ -3876,19 +3888,19 @@ PrefabInstance:
       objectReference: {fileID: 496019961}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 120
+      value: 609.8
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10
+      value: 18.7
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 60
+      value: 233.3
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3896,7 +3908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalRotation.z
@@ -3908,7 +3920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6950022729453494995, guid: f69df8363233e0a42a50f54440b4a534, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -5099,7 +5111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 476, y: -306}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &711975225 stripped
@@ -15678,7 +15690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -16045,8 +16057,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdeb8d1d33e4984f860eeef75ecd9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  spawnLocation: {fileID: 0}
+  objectToSpawn: {fileID: 8602978969601620351, guid: 0768bf8069095594cb87c1f0f5947f3a, type: 3}
+  spawnLocation: {fileID: 1713276731}
   price: 70
   moneySystem: {fileID: 0}
   clickSound: {fileID: 8300000, guid: e74064d0ba6e74645b7248674e0259db, type: 3}
@@ -17253,6 +17265,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1621991540713508019, guid: c8134dd87be4906419f13922ddc5bf4f, type: 3}
   m_PrefabInstance: {fileID: 997208019}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1008547306
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 608.2989
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0000038
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 167.25717
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566946067512585474, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7914013869049863923, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
+      propertyPath: m_Name
+      value: DummyEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 235b2c4d6f87ec84381723cd516fa380, type: 3}
 --- !u!1001 &1009990880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19079,7 +19148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -333, y: -276}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1228717645
@@ -19290,8 +19359,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cdeb8d1d33e4984f860eeef75ecd9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToSpawn: {fileID: 0}
-  spawnLocation: {fileID: 0}
+  objectToSpawn: {fileID: 3456728423918174085, guid: 7d9240b30b3d045418395cfb61bdf249, type: 3}
+  spawnLocation: {fileID: 1713276731}
   price: 10
   moneySystem: {fileID: 0}
   clickSound: {fileID: 8300000, guid: e74064d0ba6e74645b7248674e0259db, type: 3}
@@ -31175,3 +31244,4 @@ SceneRoots:
   - {fileID: 1426857413}
   - {fileID: 1552327685}
   - {fileID: 737970286}
+  - {fileID: 1008547306}
