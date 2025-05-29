@@ -6,7 +6,7 @@ public class ControlSwitcher : MonoBehaviour
     [Header("RTS Mode")]
     public Camera rtsCamera;
     public MonoBehaviour[] rtsControllers;
-    public GameObject[] rtsUIElements; 
+    public GameObject[] rtsUIElements; // ✅ Now an array of UI elements
     public event Action OnDeath;
 
     [Header("Player Modes (0…N–1)")]
@@ -51,7 +51,7 @@ public class ControlSwitcher : MonoBehaviour
     void EnterRTS()
     {
         rtsCamera.gameObject.SetActive(true);
-        SetUIElementsActive(rtsUIElements, true); 
+        SetUIElementsActive(rtsUIElements, true); // ✅ Show RTS UI
         foreach (var c in rtsControllers)
             c.enabled = true;
     }
@@ -59,7 +59,7 @@ public class ControlSwitcher : MonoBehaviour
     void TearDownRTS()
     {
         rtsCamera.gameObject.SetActive(false);
-        SetUIElementsActive(rtsUIElements, false); 
+        SetUIElementsActive(rtsUIElements, false); // ✅ Hide RTS UI
         foreach (var c in rtsControllers)
             c.enabled = false;
     }
