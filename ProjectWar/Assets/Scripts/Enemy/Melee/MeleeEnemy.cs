@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class MeleeEnemy : Enemy
 {
+    private Animator animator;
     private EnemyStateMachine _sm;
-    private IState            _chaseState;
+    private IState _chaseState;
 
     private void Start()
     {
+        animator = GetComponent<Animator>();
         _sm = new EnemyStateMachine();
 
         // --- derive tags based on this object's own tag ---

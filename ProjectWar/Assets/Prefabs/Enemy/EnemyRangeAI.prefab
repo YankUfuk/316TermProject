@@ -3978,6 +3978,7 @@ GameObject:
   - component: {fileID: 4599540836919059227}
   - component: {fileID: 5205948900924096215}
   - component: {fileID: 5124749856122078451}
+  - component: {fileID: -4911962762042805638}
   m_Layer: 0
   m_Name: EnemyRangeAI
   m_TagString: TroopEnemy
@@ -4099,7 +4100,6 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  playerTag: Troop
   coverTag: Cover
   projectilePrefab: {fileID: 2277805726131954121, guid: edcf114591e3d6b4ebf5bf9ed2d500b7, type: 3}
   projectileSpeed: 50
@@ -4140,6 +4140,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   currentHealth: 3
+--- !u!95 &-4911962762042805638
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6477775855229789627}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0e55d5c42cc96404f872b45455603f8b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 638450f74410fea4293fe34e01353a10, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6595499179587744053
 GameObject:
   m_ObjectHideFlags: 0
