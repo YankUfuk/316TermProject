@@ -15,6 +15,9 @@ TagManager:
   - CinemachineTarget
   - TroopEnemy
   - Cover
+  - TroopEnemyBase
+  - TroopBase
+  - Switch
   layers:
   - Default
   - TransparentFX
