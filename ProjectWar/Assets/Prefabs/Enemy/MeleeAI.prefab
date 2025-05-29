@@ -2125,7 +2125,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2151,13 +2151,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visionRange: 5
   attackRange: 2
-  moveSpeed: 2
+  moveSpeed: 5
   firePoint: {fileID: 6908176141756987369}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  myFaction: 0
-  troopTag: TroopEnemy
 --- !u!114 &3236744190147790893
 MonoBehaviour:
   m_ObjectHideFlags: 0

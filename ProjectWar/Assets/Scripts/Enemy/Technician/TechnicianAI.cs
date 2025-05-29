@@ -1,56 +1,38 @@
-// TechnicianAI.cs
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class TechnicianAI : MonoBehaviour
+public class TechnicianAI : Enemy  // Inherit Enemy so it can use Agent, Tag logic, etc.
 {
-    [Header("Settings")]
-    [Tooltip("Tag of your Base object")]
-    [SerializeField] private string baseTag = "Base";
+    [Header("Repair Settings")]
     [Tooltip("How much health to add when you arrive")]
-    [SerializeField] private float  repairAmount = 25f;
+    [SerializeField] private float repairAmount = 25f;
+
     [Tooltip("Optional: destroy technician after repairing")]
-    [SerializeField] private bool   destroyOnComplete = true;
+    [SerializeField] private bool destroyOnComplete = true;
 
-    private NavMeshAgent agent;
-    private Transform    baseTransform;
-    private BaseHealth         baseComponent;    
+    private EnemyStateMachine _sm;
 
-    void Start()
+    private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        string baseTag;
 
-        // find the Base by tag
-        var go = GameObject.FindWithTag(baseTag);
-        if (go == null)
+        if (CompareTag("Troop"))
+            baseTag = "TroopBase";
+        else if (CompareTag("TroopEnemy"))
+            baseTag = "TroopEnemyBase";
+        else
         {
-            enabled = false;
+            Debug.LogWarning($"[TechnicianAI] Unexpected tag '{tag}' on '{name}'. Expected 'Troop' or 'TroopEnemy'.");
             return;
         }
 
-        baseTransform = go.transform;
-        baseComponent = go.GetComponent<BaseHealth>();
-        if (baseComponent == null)
-
-        agent.SetDestination(baseTransform.position);
-
-        StartCoroutine(DriveAndRepair());
+        _sm = new EnemyStateMachine();
+        _sm.Initialize(new TechnicianRepairState(this, _sm, baseTag, repairAmount, destroyOnComplete));
     }
 
-    private IEnumerator DriveAndRepair()
+    private void Update()
     {
-        while (agent.pathPending) 
-            yield return null;
-
-        while (agent.remainingDistance > agent.stoppingDistance)
-            yield return null;
-
-        if (baseComponent != null)
-            baseComponent.IncreaseHealth(repairAmount);
-
-        if (destroyOnComplete)
-            Destroy(gameObject);
+        _sm.Tick();
     }
 }

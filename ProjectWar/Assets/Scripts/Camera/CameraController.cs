@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        //HandleMouseInput();
         HandleMovementInput();
     }
 

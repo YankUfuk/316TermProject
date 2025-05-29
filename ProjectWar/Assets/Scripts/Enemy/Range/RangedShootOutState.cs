@@ -69,9 +69,23 @@ public class RangedShootOutState : IState
         // face the player
         if (player != null)
         {
-            Vector3 lookDir = (player.position - enemy.transform.position).normalized;
-            enemy.transform.rotation = Quaternion.LookRotation(lookDir);
+            shootTimer += Time.deltaTime;
+            if (shootTimer <= 5f && Time.time >= nextFireTime)
+            {
+                enemy.FireAt(player.position);
+                nextFireTime = Time.time + 1f / enemy.FireRate;
+            }
+            else if (shootTimer > 5f)
+            {
+                sm.ChangeState(new RangedCoverState(enemy, sm, playerTag, coverTag));
+            }
         }
+        else
+        {
+            // Immediately change state if player is null (enemy defeated or missing)
+            sm.ChangeState(new RangedChaseState(enemy, sm, enemy.CompareTag("Troop") ? "TroopEnemyBase" : "TroopBase"));
+        }
+
 
         // fire at your fire-rate for up to 5 seconds
         shootTimer += Time.deltaTime;

@@ -1,31 +1,23 @@
-using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision objectWeHit)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (objectWeHit.gameObject.CompareTag("Target"))
-        {
-            CreateBulletImpactEffect(objectWeHit);
-            Destroy(gameObject);
-        }
-        
-        if (objectWeHit.gameObject.CompareTag("Wall"))
-        {
-            CreateBulletImpactEffect(objectWeHit);
-            Destroy(gameObject);
-        }
+        CreateBulletImpactEffect(collision);
+        Destroy(gameObject);
     }
 
-    void CreateBulletImpactEffect(Collision objectWeHit)
+    void CreateBulletImpactEffect(Collision collision)
     {
-        ContactPoint contact = objectWeHit.contacts[0];
+        ContactPoint contact = collision.contacts[0];
 
-        GameObject hole = Instantiate(References.Instance.bulletImpactEffectPrefab, 
+        GameObject hole = Instantiate(
+            References.Instance.bulletImpactEffectPrefab,
             contact.point,
-            Quaternion.LookRotation(contact.normal));
-        
-        hole.transform.SetParent(objectWeHit.gameObject.transform);
+            Quaternion.LookRotation(contact.normal)
+        );
+
+        hole.transform.SetParent(collision.transform);
     }
 }

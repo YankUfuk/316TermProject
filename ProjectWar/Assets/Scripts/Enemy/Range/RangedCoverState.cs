@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 
-// COVER STATE: move behind the nearest blocking cover, then switch to shoot-out
 public class RangedCoverState : IState
 {
     private readonly RangedEnemy enemy;
