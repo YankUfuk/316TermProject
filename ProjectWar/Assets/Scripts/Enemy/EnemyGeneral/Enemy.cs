@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     [Tooltip("Layers that block line of sight")]
     [SerializeField] private LayerMask obstacleMask;
 
+    private string targetTag;
+    public Transform CurrentTarget { get; private set; }
+
     protected NavMeshAgent agent;
     public NavMeshAgent Agent => agent;
 
@@ -42,12 +45,11 @@ public class Enemy : MonoBehaviour
 
     public bool HasLineOfSight(Vector3 start, Vector3 end)
     {
-        var direction = (end - start).normalized;
+        var dir = (end - start).normalized;
         float dist = Vector3.Distance(start, end);
-        return !Physics.Raycast(start, direction, dist, obstacleMask);
+        return !Physics.Raycast(start, dir, dist, obstacleMask);
     }
 
-    public Transform CurrentTarget { get; private set; }
 
     protected virtual void Awake()
     {
@@ -56,14 +58,63 @@ public class Enemy : MonoBehaviour
         {
             agent.speed            = moveSpeed;
             agent.stoppingDistance = attackRange * 0.9f;
-
-            // Snap the agent onto the NavMesh at start
             NavMeshHit startHit;
             if (NavMesh.SamplePosition(transform.position, out startHit, 5f, NavMesh.AllAreas))
-            {
                 agent.Warp(startHit.position);
+        }
+
+        // Decide which tag we should chase:
+        if (gameObject.tag == "troop")
+            targetTag = "troopenemy";
+        else if (gameObject.tag == "troopenemy")
+            targetTag = "troop";
+        else
+            Debug.LogWarning($"Enemy '{name}' has unexpected tag '{gameObject.tag}'");
+    }
+    private void Update()
+    {
+        AcquireTarget();
+
+        if (CurrentTarget != null)
+        {
+            float dist = Vector3.Distance(transform.position, CurrentTarget.position);
+
+            if (dist > attackRange)
+            {
+                // Chase
+                MoveTo(CurrentTarget.position);
+            }
+            else
+            {
+                // In range → stop and attack
+                if (agent != null) agent.isStopped = true;
+                // ▶ your attack logic here, e.g. FireWeapon();
             }
         }
+    }
+    private void AcquireTarget()
+    {
+        // Grab all of the opposite-tagged units
+        var candidates = GameObject.FindGameObjectsWithTag(targetTag);
+        Transform best = null;
+        float bestDist = float.MaxValue;
+
+        foreach (var go in candidates)
+        {
+            float d = Vector3.Distance(transform.position, go.transform.position);
+            if (d <= visionRange && d < bestDist)
+            {
+                // optional: check line of sight
+                if (HasLineOfSight(firePoint.position, go.transform.position))
+                {
+                    bestDist = d;
+                    best     = go.transform;
+                }
+            }
+        }
+
+        // Set or clear the target
+        SetTarget(best);
     }
 
     public void MoveTo(Vector3 worldPos)
@@ -71,20 +122,16 @@ public class Enemy : MonoBehaviour
         if (agent != null)
         {
             NavMeshHit hit;
-            const float maxSampleDistance = 10f;
-            if (NavMesh.SamplePosition(worldPos, out hit, maxSampleDistance, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(worldPos, out hit, 10f, NavMesh.AllAreas))
             {
                 agent.isStopped = false;
                 agent.SetDestination(hit.position);
             }
-            else
-            {
-                agent.isStopped = true;
-            }
+            else agent.isStopped = true;
         }
         else
         {
-            Vector3 dir = (worldPos - transform.position).normalized;
+            var dir = (worldPos - transform.position).normalized;
             transform.position += dir * moveSpeed * Time.deltaTime;
         }
     }
@@ -95,4 +142,5 @@ public class Enemy : MonoBehaviour
         if (agent != null && t != null)
             agent.SetDestination(t.position);
     }
+    
 }

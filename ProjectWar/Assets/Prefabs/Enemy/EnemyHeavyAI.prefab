@@ -47,8 +47,8 @@ GameObject:
   - component: {fileID: 4860464457155182607}
   - component: {fileID: 9038655946975785928}
   m_Layer: 0
-  m_Name: HeavyAI
-  m_TagString: Troop
+  m_Name: EnemyHeavyAI
+  m_TagString: TroopEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,8 +163,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 64
-  myFaction: 0
-  troopTag: TroopEnemy
+  troopTag: Troop
   areaRadius: 3
   blastDamage: 30
   attackCooldown: 2

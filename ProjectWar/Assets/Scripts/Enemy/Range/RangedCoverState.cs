@@ -47,7 +47,6 @@ public class RangedCoverState : IState
                      ? hit.position
                      : coverSpot.position;
 
-        Debug.Log($"[{enemy.name}] CoverState → moving to {hidePosition}");
         var agent = enemy.Agent;
         agent.isStopped = false;
         agent.SetDestination(hidePosition);

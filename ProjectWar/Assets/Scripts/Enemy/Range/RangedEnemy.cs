@@ -32,7 +32,6 @@ public class RangedEnemy : Enemy
 
     private void Update()
     { 
-        Debug.Log($"[{name}] Current State: {_sm.CurrentState.GetType().Name}");
         _sm.Tick();
     }
 

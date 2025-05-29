@@ -36,7 +36,7 @@ public class RangedAttackState : StateBase
                 (RangedEnemy)enemy,
                 sm,
                 _player.tag,
-                _coverTag,              // pass along the same tag string you used in your CoverState
+                _coverTag,              
                 _coverSpot.position,
                 enemy.AttackRange
             ));

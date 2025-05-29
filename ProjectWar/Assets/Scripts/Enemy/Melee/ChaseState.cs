@@ -22,7 +22,6 @@ public class ChaseState : IState
         } 
         else 
         {
-            Debug.Log($"[{_enemy.name}] no targets found");
             _enemy.Agent.isStopped = true;
         }
     }
@@ -35,9 +34,6 @@ public class ChaseState : IState
 
         // **see what the agent thinks it’s doing**
         var a = _enemy.Agent;
-        Debug.Log($"[{_enemy.name}] Tick: onNavMesh={a.isOnNavMesh} " +
-                  $"hasPath={a.hasPath} pathPending={a.pathPending} " +
-                  $"remainingDist={a.remainingDistance}");
     }
 
     public void Exit() {

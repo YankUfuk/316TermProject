@@ -39,7 +39,6 @@ public class RangedShootOutState : IState
         {
             Vector3 dir      = (player.position - coverPos).normalized;
             Vector3 shootPos = coverPos + dir * attackRange * 0.9f;
-            Debug.Log($"[{enemy.name}] ShootOutState → moving to {shootPos}");
             var agent = enemy.Agent;
             agent.isStopped = false;
             agent.SetDestination(shootPos);
