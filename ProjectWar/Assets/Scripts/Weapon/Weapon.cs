@@ -213,7 +213,7 @@ public class Weapon : MonoBehaviour
     {
         if (weaponClass != WeaponClass.Tank || crosshairUI == null || tankTurret == null)
         {
-            crosshairUI.gameObject.SetActive(false);
+            crosshairUI.gameObject?.SetActive(false);
             return;
         }
 

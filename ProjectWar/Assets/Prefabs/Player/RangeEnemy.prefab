@@ -43,13 +43,14 @@ GameObject:
   - component: {fileID: 3953289959268052206}
   - component: {fileID: 4318734598979202341}
   - component: {fileID: 2492599232644335723}
+  - component: {fileID: 916000478760648936}
   m_Layer: 0
   m_Name: RangeEnemy
   m_TagString: Troop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1782559930449372955
 Transform:
   m_ObjectHideFlags: 0
@@ -129,6 +130,23 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &916000478760648936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6364555492183000582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9eb8304b0dee724da58f1ef184915d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitCamera: {fileID: 4681256211965300544}
+  controllers:
+  - {fileID: 4318734598979202341}
+  - {fileID: 2492599232644335723}
+  health: {fileID: 2847169178001655297}
 --- !u!1 &7438231494302996788
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +480,7 @@ GameObject:
   - component: {fileID: 8789157204763414836}
   - component: {fileID: 7106952794182454159}
   - component: {fileID: 5702174929493355906}
+  - component: {fileID: 2847169178001655297}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -560,3 +579,17 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2847169178001655297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633886644917928178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3771314e23a2646886db391d9f10e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 3
+  currentHealth: 0

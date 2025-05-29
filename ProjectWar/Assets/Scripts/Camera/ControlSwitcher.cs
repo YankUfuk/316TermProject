@@ -1,146 +1,110 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using System;
 
 public class ControlSwitcher : MonoBehaviour
 {
-    [Header("Controllers")]
-    [Tooltip("Script on your default character (e.g. camera-orbit)")]
-    public MonoBehaviour    mouseController;
-    [Tooltip("Your RTS-style camera controller script")]
-    public MonoBehaviour    rtsCameraController;
+    [Header("RTS Mode")]
+    public Camera         rtsCamera;
+    public MonoBehaviour[] rtsControllers;
 
-    [Header("Cameras")]
-    [Tooltip("One shared camera you use for player mode")]
-    public Camera playerCamera;
-    [Tooltip("Your RTS-mode camera")]
-    public Camera rtsCamera;
+    [Header("Player Modes (0…N–1)")]
+    [Tooltip("Set Size = number of different unit types you can possess.")]
+    public ControlMode[]  modes;
 
-    [Header("Settings")]
-    public KeyCode switchKey    = KeyCode.Tab;
-    public string  troopTag     = "Switch";               // Now used dynamically!
-    public Vector3 cameraOffset = new Vector3(0, 2, -4);  // Tweak to taste
+    int _activeIndex = -1;   // –1 = RTS, 0…modes.Length–1 = modes
 
-    // internal
-    private Enemy           _aiComp;       // your Enemy or MeleeEnemy script
-    private PlayerMovement  _pcComp;       // your player-control script
-    private GameObject      _troopRoot;
-    private bool            _controllingTroop = false;
-
-    void Update()
+    [Serializable]
+    public class ControlMode
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // 1) Ray from the center of your RTS camera
-            Vector3 center = new Vector3(rtsCamera.pixelWidth / 2f,
-                                         rtsCamera.pixelHeight / 2f,
-                                         0f);
-            Ray ray = rtsCamera.ScreenPointToRay(center);
+        public string     modeName;
+        public GameObject unitPrefab;
+        public Transform  spawnPoint;
 
-            if (Physics.Raycast(ray, out var hit) && hit.collider.CompareTag(troopTag))
-            {
-                // 2) Climb to the topmost ancestor that has your troopTag
-                Transform root = hit.collider.transform;
-                while (root != null && !root.CompareTag(troopTag))
-                    root = root.parent;
-                if (root == null) return;
-
-                // 3) BFS‐style search: stop as soon as we find both targets
-                var names = new[] { "MeleeAI", "MeleeEnemy" };
-                var found = new Dictionary<string, Transform>();
-                var queue = new Queue<Transform>();
-                queue.Enqueue(root);
-
-                while (queue.Count > 0 && found.Count < names.Length)
-                {
-                    var cur = queue.Dequeue();
-
-                    foreach (var name in names)
-                    {
-                        if (!found.ContainsKey(name) && cur.name.Trim() == name)
-                        {
-                            found[name] = cur;
-                            break;  // don't enqueue this one's children just yet
-                        }
-                    }
-
-                    // only keep searching this branch if we still need matches
-                    if (found.Count < names.Length)
-                        foreach (Transform child in cur)
-                            queue.Enqueue(child);
-                }
-
-                // 4) pull out the two transforms
-                if (!found.TryGetValue("MeleeAI", out var aiT) ||
-                    !found.TryGetValue("MeleeEnemy", out var ctrlT))
-                {
-                    Debug.LogWarning($"Couldn't find both 'MeleeAI' & 'MeleeEnemy' under '{root.name}'");
-                    return;
-                }
-
-                // 5) toggle them
-                aiT.gameObject. SetActive(false);
-                ctrlT.gameObject.SetActive(true);
-            }
-        }
-    }
-    
-
-    private void StartControl(GameObject troopRoot)
-    {
-        // cache for later
-        _troopRoot = troopRoot;
-
-        // find the AI component
-        _aiComp = troopRoot.GetComponentInChildren<Enemy>();
-        // find the player-control component
-        _pcComp = troopRoot.GetComponentInChildren<PlayerMovement>();
-
-        if (_aiComp == null || _pcComp == null)
-        {
-            Debug.LogWarning($"Troop needs both an Enemy (AI) and PlayerMovement component.\n" +
-                             $"Found Enemy? {_aiComp!=null}, PlayerMovement? {_pcComp!=null}");
-            _troopRoot = null;
-            return;
-        }
-
-        // disable AI, enable player-control
-        _aiComp.enabled = false;
-        _pcComp.enabled = true;
-
-        // swap cameras
-        SetRTSMode(false);
-
-        // parent the player camera to the troop
-        playerCamera.transform.SetParent(_pcComp.transform);
-        playerCamera.transform.localPosition = cameraOffset;
-        playerCamera.transform.localRotation = Quaternion.identity;
-        playerCamera.enabled = true;
-
-        _controllingTroop = true;
+        [HideInInspector] public GameObject         instance;
+        [HideInInspector] public UnitControlSetup   setup;
     }
 
-    private void StopControl()
+    void Start()
     {
-        // re-enable AI, disable player-control
-        if (_aiComp != null) _aiComp.enabled = true;
-        if (_pcComp != null) _pcComp.enabled = false;
-
-        // restore cameras
-        playerCamera.transform.SetParent(null);
-        playerCamera.enabled = false;
-        SetRTSMode(true);
-
-        _troopRoot = null;
-        _aiComp = null;
-        _pcComp = null;
-        _controllingTroop = false;
+        // kick off in RTS
+        EnterRTS();
     }
 
-    private void SetRTSMode(bool on)
+    /// <summary>
+    /// Call from UI: for RTS pass -1, for your types pass 0…modes.Length–1
+    /// </summary>
+    public void SwitchTo(int modeIndex)
     {
-        rtsCamera.gameObject.SetActive(on);
-        rtsCameraController.enabled = on;
-        mouseController.enabled     = !on; // if you want mouse-look off in RTS
+        if (modeIndex == _activeIndex) return;
+
+        // 1) Tear down old
+        if (_activeIndex >= 0)
+            TearDownMode(modes[_activeIndex]);
+        else
+            TearDownRTS();
+
+        _activeIndex = modeIndex;
+
+        // 2) Bring up new
+        if (_activeIndex >= 0)
+            BringUpMode(modes[_activeIndex]);
+        else
+            EnterRTS();
+    }
+
+    void EnterRTS()
+    {
+        rtsCamera.gameObject.SetActive(true);
+        foreach (var c in rtsControllers) c.enabled = true;
+    }
+
+    void TearDownRTS()
+    {
+        rtsCamera.gameObject.SetActive(false);
+        foreach (var c in rtsControllers) c.enabled = false;
+    }
+
+    void BringUpMode(ControlMode m)
+    {
+        // spawn prefab
+        m.instance = Instantiate(
+            m.unitPrefab,
+            m.spawnPoint.position,
+            m.spawnPoint.rotation);
+
+        // grab its UnitControlSetup
+        m.setup = m.instance.GetComponent<UnitControlSetup>();
+
+        // enable that unit’s camera + controllers
+        m.setup.unitCamera.gameObject.SetActive(true);
+        foreach (var c in m.setup.controllers)
+            c.enabled = true;
+
+        // listen for death
+        if (m.setup.health != null)
+            m.setup.health.OnDeath += OnUnitDeath;
+    }
+
+    void TearDownMode(ControlMode m)
+    {
+        // unsubscribe
+        if (m.setup.health != null)
+            m.setup.health.OnDeath -= OnUnitDeath;
+
+        // disable camera & controllers (in case)
+        m.setup.unitCamera.gameObject.SetActive(false);
+        foreach (var c in m.setup.controllers)
+            c.enabled = false;
+
+        // destroy the spawned GameObject
+        Destroy(m.instance);
+        m.instance = null;
+        m.setup    = null;
+    }
+
+    void OnUnitDeath()
+    {
+        // when your unit dies, revert to RTS
+        SwitchTo(-1);
     }
 }
