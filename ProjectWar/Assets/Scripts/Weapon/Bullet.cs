@@ -7,9 +7,11 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Deal damage to enemy units
+        Debug.Log($"[Bullet] Hit: {collision.gameObject.name}");
+
         if (collision.gameObject.TryGetComponent<EnemyHealth>(out var enemyHealth))
         {
+            Debug.Log("[Bullet] Damaging enemy.");
             enemyHealth.TakeDamage(damage);
         }
         // Deal damage to bases

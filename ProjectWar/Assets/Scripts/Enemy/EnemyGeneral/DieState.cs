@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class DieState : StateBase
 {
-    private float deathDelay = 2f; // seconds before destroying
-    private float deathTimer;
-
     public DieState(Enemy enemy, EnemyStateMachine sm) : base(enemy, sm) {}
 
     public override void Enter()
@@ -20,16 +17,12 @@ public class DieState : StateBase
         if (enemy.TryGetComponent<Collider>(out var col))
             col.enabled = false;
 
-        // Start countdown to destroy
-        deathTimer = 0f;
+        // Destroy the enemy immediately
+        Debug.Log($"[DieState] Destroying {enemy.name} immediately");
+        GameObject.Destroy(enemy.gameObject);
     }
 
-    public override void Tick()
-    {
-        deathTimer += Time.deltaTime;
-        if (deathTimer >= deathDelay)
-        {
-            GameObject.Destroy(enemy.gameObject);
-        }
-    }
+    public override void Tick() { }
+
+    public override void Exit() { }
 }

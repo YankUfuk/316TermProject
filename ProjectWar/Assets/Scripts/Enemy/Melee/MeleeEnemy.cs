@@ -8,10 +8,8 @@ public class MeleeEnemy : Enemy
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
-        _sm = new EnemyStateMachine();
+        StateMachine = new EnemyStateMachine(); 
 
-        // --- derive tags based on this object's own tag ---
         string unitTag, baseTag;
         if (CompareTag("Troop"))
         {
@@ -30,10 +28,10 @@ public class MeleeEnemy : Enemy
             unitTag = baseTag = "";
         }
 
-        // initialize the state machine to hunt units, then fallback to base
-        _chaseState = new ChaseState(this, _sm, unitTag, baseTag);
-        _sm.Initialize(_chaseState);
+        var chaseState = new ChaseState(this, StateMachine, unitTag, baseTag);
+        StateMachine.Initialize(chaseState);
     }
+
 
     private void Update()
     {

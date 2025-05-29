@@ -16,17 +16,27 @@ public class EnemyHealth : MonoBehaviour
     
     public void TakeDamage(int damage)
     {
-        Debug.Log($"{name} took {damage} damage. Current health: {currentHealth}");
         currentHealth -= damage;
+        Debug.Log($"{name} took {damage} damage. Current health: {currentHealth}");
+
         if (currentHealth <= 0)
         {
-            if (TryGetComponent<EnemyStateMachine>(out var sm))
-                sm.ChangeState(new DieState(GetComponent<Enemy>(), sm));
+            Debug.Log($"{name} died!");
+    
+            Enemy enemyComponent = GetComponent<Enemy>();
+            if (enemyComponent != null)
+            {
+                enemyComponent.StateMachine.ChangeState(new DieState(enemyComponent, enemyComponent.StateMachine));
+            }
             else
+            {
                 Die(); 
-        }
+            }
 
+            
+        }
     }
+
 
     private void Die()
     {

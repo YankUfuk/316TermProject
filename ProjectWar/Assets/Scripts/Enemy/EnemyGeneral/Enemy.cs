@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     [Header("General Settings")]
     [Tooltip("Layers that block line of sight")]
     [SerializeField] private LayerMask obstacleMask;
+    public EnemyStateMachine StateMachine { get; protected set; }
 
     private string targetTag;
     public Transform CurrentTarget { get; private set; }
@@ -53,6 +54,8 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        StateMachine = new EnemyStateMachine();
+
         agent = GetComponent<NavMeshAgent>();
         if (agent != null)
         {

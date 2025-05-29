@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5692872803243048623}
   - component: {fileID: 1606222006311313385}
   - component: {fileID: 5977399034490330615}
+  - component: {fileID: 4606086960009414337}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -141,6 +142,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4606086960009414337
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4574089783378563320}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5602284326886201420
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,8 +181,9 @@ GameObject:
   - component: {fileID: 972288692605838001}
   - component: {fileID: 3465761247990236198}
   - component: {fileID: 4135183677711885543}
-  - component: {fileID: 4104828999471460214}
   - component: {fileID: 1093393364415703871}
+  - component: {fileID: 6447526876099673509}
+  - component: {fileID: -5947507206857408675}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Troop
@@ -171,7 +200,7 @@ Transform:
   m_GameObject: {fileID: 5602284326886201420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 82.39565, y: 3.4829948, z: 127.22066}
+  m_LocalPosition: {x: 82.39565, y: 5.67, z: 127.22066}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -218,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c6aed0c5914667488677d3f9ad8c458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 500
+  mouseSensitivity: 100
   topClamp: -90
   bottomClamp: 90
 --- !u!114 &4135183677711885543
@@ -234,27 +263,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  gravity: -19.62
+  gravity: -9
   jumpHeight: 3
   groundCheck: {fileID: 38517654939980174}
   groundDistance: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 8
---- !u!114 &4104828999471460214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5602284326886201420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a3771314e23a2646886db391d9f10e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 0
 --- !u!114 &1093393364415703871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +286,36 @@ MonoBehaviour:
   controllers:
   - {fileID: 4135183677711885543}
   - {fileID: 3465761247990236198}
-  health: {fileID: 4104828999471460214}
+  health: {fileID: 6447526876099673509}
+--- !u!114 &6447526876099673509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602284326886201420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe69b7bd6aea6e448091d7235ae6050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  currentHealth: 0
+--- !u!114 &-5947507206857408675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602284326886201420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9245b56c850a44e8033bf72489ba68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  enemyTag: TroopEnemy
+  damageCooldown: 1
 --- !u!1 &6202473372424566551
 GameObject:
   m_ObjectHideFlags: 0

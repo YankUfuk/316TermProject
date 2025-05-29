@@ -153,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 308378867026260248}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.65, z: -4.59}
+  m_LocalPosition: {x: 0, y: 5.02, z: -9.48}
   m_LocalScale: {x: 0.25, y: 0.6666667, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -287,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 815816076937338887}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.2, z: 0}
+  m_LocalPosition: {x: 0, y: -0.71, z: 0}
   m_LocalScale: {x: 0.25, y: 0.6666667, z: 0.33333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -321,8 +321,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 90.42, y: 3.4829948, z: 127.22066}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6995851869056496435}
   m_Father: {fileID: 0}
@@ -346,12 +346,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 3.7
-  m_Radius: 0.6
+  m_Radius: 2.01
   m_SlopeLimit: 45
   m_StepOffset: 0.7
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1.58, z: 0}
 --- !u!114 &3221449576351269791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   controllers:
   - {fileID: 8408541262485639958}
   - {fileID: 9008350735732505482}
-  health: {fileID: 843421644127476480}
+  health: {fileID: 2881259337111748339}
 --- !u!1 &4888131539141027628
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 4888131539141027628}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0.67, z: 1.912}
+  m_LocalPosition: {x: -0.2, y: 7.8, z: 19.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -567,7 +567,7 @@ GameObject:
   - component: {fileID: 707211903371082723}
   - component: {fileID: 9008350735732505482}
   - component: {fileID: 7198932272617156473}
-  - component: {fileID: 843421644127476480}
+  - component: {fileID: 2881259337111748339}
   m_Layer: 0
   m_Name: Bottom
   m_TagString: Untagged
@@ -666,8 +666,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2.140016, z: 6.877487}
+  m_Center: {x: 0, y: 0.57000804, z: -0.39324188}
 --- !u!114 &9008350735732505482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,13 +707,13 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 3.7
-  m_Radius: 0.6
+  m_Radius: 1.45
   m_SlopeLimit: 45
   m_StepOffset: 0.7
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &843421644127476480
+  m_Center: {x: 0, y: 1.17, z: 0}
+--- !u!114 &2881259337111748339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -722,10 +722,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5643884347514813502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a3771314e23a2646886db391d9f10e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fe69b7bd6aea6e448091d7235ae6050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 5
   currentHealth: 0
 --- !u!1 &8106570416906831018
 GameObject:

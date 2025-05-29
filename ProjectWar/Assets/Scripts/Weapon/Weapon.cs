@@ -156,12 +156,10 @@ public class Weapon : MonoBehaviour
         Rigidbody rb = proj.GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Debug.LogWarning("Projectile has no Rigidbody.");
         }
         else
         {
             rb.AddForce(dir * bulletVelocity, ForceMode.Impulse);
-            Debug.Log($"Applied force: {dir * bulletVelocity}");
         }
 
         StartCoroutine(DestroyAfter(proj, bulletPrefabLifeTime));
@@ -175,7 +173,6 @@ public class Weapon : MonoBehaviour
         if (currentShootingMode == ShootingMode.Burst && burstBulletsLeft > 1)
         {
             burstBulletsLeft--;
-            Debug.Log($"Burst shot remaining: {burstBulletsLeft}, re-invoking FireWeapon after delay.");
             Invoke(nameof(FireWeapon), shootingDelay);
         }
     }
@@ -248,7 +245,9 @@ public class Weapon : MonoBehaviour
     {
         if (weaponClass != WeaponClass.Tank || crosshairUI == null || tankTurret == null)
         {
-            crosshairUI.gameObject?.SetActive(false);
+            if (crosshairUI != null)
+                crosshairUI.gameObject.SetActive(false);
+
             return;
         }
 
