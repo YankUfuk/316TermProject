@@ -1,22 +1,23 @@
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class HeavyChaseState : IState
 {
     private readonly HeavyEnemy      heavy;
     private readonly EnemyStateMachine sm;
-    private readonly string          targetTag;
+    private readonly string          unitTag;   
+    private readonly string          baseTag;   
 
-    public HeavyChaseState(HeavyEnemy heavy, EnemyStateMachine sm, string targetTag)
+    public HeavyChaseState(HeavyEnemy heavy, EnemyStateMachine sm, string unitTag, string baseTag)
     {
-        this.heavy     = heavy;
-        this.sm        = sm;
-        this.targetTag = targetTag;
+        this.heavy   = heavy;
+        this.sm      = sm;
+        this.unitTag = unitTag;
+        this.baseTag = baseTag;
     }
 
     public void Enter()
     {
-        Debug.Log($"[{heavy.name}] HeavyChaseState.Enter()");
         AcquireTarget();
     }
 
@@ -32,7 +33,7 @@ public class HeavyChaseState : IState
 
         float dist = Vector3.Distance(heavy.transform.position, tgt.position);
 
-        // if within firing distance, switch to attack
+        // switch to attack if in range
         if (dist <= heavy.AttackRange)
         {
             sm.ChangeState(new HeavyAttackState(heavy, sm));
@@ -47,15 +48,31 @@ public class HeavyChaseState : IState
 
     private void AcquireTarget()
     {
-        // pick nearest alive other TroopEnemy
-        var best = GameObject
-            .FindGameObjectsWithTag(targetTag)
+        // 1) hunt nearest alive unit of unitTag
+        var unitCandidates = GameObject
+            .FindGameObjectsWithTag(unitTag)
             .Select(g => g.transform)
             .Where(t => t != heavy.transform)
+            .Where(t => !IsDead(t));
+
+        Transform next = unitCandidates
             .OrderBy(t => Vector3.Distance(heavy.transform.position, t.position))
             .FirstOrDefault();
 
-        heavy.SetTarget(best);
-        Debug.Log($"[{heavy.name}] acquired target: {best?.name}");
+        // 2) fallback to base if no units remain
+        if (next == null)
+        {
+            var baseGO = GameObject.FindGameObjectWithTag(baseTag);
+            if (baseGO != null)
+                next = baseGO.transform;
+        }
+
+        heavy.SetTarget(next);
+    }
+
+    private bool IsDead(Transform t)
+    {
+        var h = t.GetComponent<EnemyHealth>();
+        return h != null && h.currentHealth <= 0;
     }
 }

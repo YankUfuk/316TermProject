@@ -64,10 +64,10 @@ public class Enemy : MonoBehaviour
         }
 
         // Decide which tag we should chase:
-        if (gameObject.tag == "troop")
-            targetTag = "troopenemy";
-        else if (gameObject.tag == "troopenemy")
-            targetTag = "troop";
+        if (gameObject.tag == "Troop")
+            targetTag = "TroopEnemy";
+        else if (gameObject.tag == "TroopEnemy")
+            targetTag = "Troop";
         else
             Debug.LogWarning($"Enemy '{name}' has unexpected tag '{gameObject.tag}'");
     }

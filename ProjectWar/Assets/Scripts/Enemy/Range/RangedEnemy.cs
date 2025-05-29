@@ -34,7 +34,6 @@ public class RangedEnemy : Enemy
     { 
         _sm.Tick();
     }
-
     
     public void FireAt(Vector3 targetPos)
     {
