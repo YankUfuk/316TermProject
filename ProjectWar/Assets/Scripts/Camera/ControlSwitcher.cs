@@ -11,7 +11,7 @@ public class ControlSwitcher : MonoBehaviour
     [Tooltip("Set Size = number of different unit types you can possess.")]
     public ControlMode[]  modes;
 
-    int _activeIndex = -1;   // –1 = RTS, 0…modes.Length–1 = modes
+    int _activeIndex = -1;   
 
     [Serializable]
     public class ControlMode
@@ -26,18 +26,13 @@ public class ControlSwitcher : MonoBehaviour
 
     void Start()
     {
-        // kick off in RTS
         EnterRTS();
     }
-
-    /// <summary>
-    /// Call from UI: for RTS pass -1, for your types pass 0…modes.Length–1
-    /// </summary>
+    
     public void SwitchTo(int modeIndex)
     {
         if (modeIndex == _activeIndex) return;
 
-        // 1) Tear down old
         if (_activeIndex >= 0)
             TearDownMode(modes[_activeIndex]);
         else
@@ -45,7 +40,6 @@ public class ControlSwitcher : MonoBehaviour
 
         _activeIndex = modeIndex;
 
-        // 2) Bring up new
         if (_activeIndex >= 0)
             BringUpMode(modes[_activeIndex]);
         else
@@ -104,7 +98,6 @@ public class ControlSwitcher : MonoBehaviour
 
     void OnUnitDeath()
     {
-        // when your unit dies, revert to RTS
         SwitchTo(-1);
     }
 }

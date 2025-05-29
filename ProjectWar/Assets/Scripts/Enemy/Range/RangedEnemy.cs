@@ -40,10 +40,10 @@ public class RangedEnemy : Enemy
             new RangedCoverState(
                 this,
                 _sm,
-                unitTag,
                 coverTag
             )
         );
+
     }
 
     private void Update()

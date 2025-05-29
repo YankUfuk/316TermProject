@@ -35,11 +35,11 @@ public class RangedAttackState : StateBase
             sm.ChangeState(new RangedShootOutState(
                 (RangedEnemy)enemy,
                 sm,
-                _player.tag,
-                _coverTag,              
+                _coverTag,
                 _coverSpot.position,
                 enemy.AttackRange
             ));
+
 
             return;
         }

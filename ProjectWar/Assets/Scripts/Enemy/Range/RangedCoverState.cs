@@ -10,18 +10,36 @@ public class RangedCoverState : IState
     private Transform coverSpot;
     private Vector3 hidePosition;
 
-    public RangedCoverState(RangedEnemy enemy, EnemyStateMachine sm, string playerTag, string coverTag)
+    public RangedCoverState(RangedEnemy enemy, EnemyStateMachine sm, string coverTag)
     {
-        this.enemy     = enemy;
-        this.sm        = sm;
-        this.playerTag = playerTag;
-        this.coverTag  = coverTag;
+        this.enemy    = enemy;
+        this.sm       = sm;
+        this.coverTag = coverTag;
+
+        if (enemy.CompareTag("Troop"))
+            this.playerTag = "TroopEnemy";
+        else if (enemy.CompareTag("TroopEnemy"))
+            this.playerTag = "Troop";
+        else
+        {
+            Debug.LogWarning($"[RangedCoverState] Unexpected tag: {enemy.tag}");
+            this.playerTag = "";
+        }
     }
 
     public void Enter()
     {
         var allCovers = GameObject.FindGameObjectsWithTag(coverTag).Select(go => go.transform);
-        var player    = GameObject.FindWithTag(playerTag)?.transform;
+
+        var potentialTargets = GameObject.FindGameObjectsWithTag(playerTag)
+            .Select(go => go.transform)
+            .Where(t => Vector3.Distance(enemy.transform.position, t.position) <= enemy.AttackRange)
+            .Where(t => enemy.HasLineOfSight(enemy.FirePoint.position, t.position))
+            .ToList();
+
+        Transform player = potentialTargets
+            .OrderBy(t => Vector3.Distance(enemy.transform.position, t.position))
+            .FirstOrDefault();
 
         // pick only those that block LOS, else fall back to nearest
         var candidates = player != null
@@ -60,7 +78,10 @@ public class RangedCoverState : IState
         if (agent.remainingDistance <= agent.stoppingDistance + 0.1f)
         {
             sm.ChangeState(new RangedShootOutState(
-                enemy, sm, playerTag, coverTag, coverSpot.position, enemy.AttackRange));
+                enemy, sm, coverTag, coverSpot.position, enemy.AttackRange));
+
+
+
         }
     }
 

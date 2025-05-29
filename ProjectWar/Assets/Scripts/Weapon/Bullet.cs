@@ -2,8 +2,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [Header("Damage Settings")]
+    public int damage = 1;  // Default damage (you can override this in prefabs)
+
     private void OnCollisionEnter(Collision collision)
     {
+        // Deal damage to enemy units
+        if (collision.gameObject.TryGetComponent<EnemyHealth>(out var enemyHealth))
+        {
+            enemyHealth.TakeDamage(damage);
+        }
+        // Deal damage to bases
+        else if (collision.gameObject.TryGetComponent<BaseHealth>(out var baseHealth))
+        {
+            baseHealth.TakeDamage(damage);
+        }
+
         CreateBulletImpactEffect(collision);
         Destroy(gameObject);
     }

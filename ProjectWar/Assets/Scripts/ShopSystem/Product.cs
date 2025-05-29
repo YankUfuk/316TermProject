@@ -25,7 +25,6 @@ public class Product : MonoBehaviour
             moneySystem.SpendMoney(price);
             Instantiate(objectToSpawn, spawnLocation.position, Quaternion.identity);
 
-            Debug.Log("Tıklama gerçekleşti");
             if (clickSound == null)
             {
                 Debug.LogWarning("🚫 clickSound NULL!");
@@ -38,12 +37,6 @@ public class Product : MonoBehaviour
             if (clickSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(clickSound);
-                Debug.Log("Ses çalındı");
-            }
-
-            else
-            {
-                Debug.LogWarning("Ses çalınamadı! AudioSource veya clickSound null");
             }
         }
     }

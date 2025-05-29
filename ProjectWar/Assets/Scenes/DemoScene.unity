@@ -16182,6 +16182,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: tent_001
       objectReference: {fileID: 0}
+    - target: {fileID: 1420911894346058163, guid: 2591709d1978df649aebd5b6b0a68773, type: 3}
+      propertyPath: m_TagString
+      value: TroopBase
+      objectReference: {fileID: 0}
     - target: {fileID: 1798000005016949513, guid: 2591709d1978df649aebd5b6b0a68773, type: 3}
       propertyPath: m_LocalScale.x
       value: 3
@@ -33028,6 +33032,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8929876542240420267, guid: 92e29fd87ccbda547a325eaae6a2abf1, type: 3}
+      propertyPath: objectToSpawn
+      value: 
+      objectReference: {fileID: 5490729019156291013, guid: f901894b5212a6a4695530c7349a5e78, type: 3}
     - target: {fileID: 8929876542240420267, guid: 92e29fd87ccbda547a325eaae6a2abf1, type: 3}
       propertyPath: spawnLocation
       value: 
