@@ -4653,13 +4653,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 3.7
+  m_Height: 1.08
   m_Radius: 0.6
   m_SlopeLimit: 45
   m_StepOffset: 0.7
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &4318734598979202341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4688,7 +4688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  gravity: -19.62
+  gravity: -19
   jumpHeight: 3
   groundCheck: {fileID: 314076942845474781}
   groundDistance: 0.4
@@ -4711,7 +4711,7 @@ MonoBehaviour:
   controllers:
   - {fileID: 4318734598979202341}
   - {fileID: 2492599232644335723}
-  health: {fileID: 2847169178001655297}
+  health: {fileID: 4308528109663068401}
 --- !u!1 &6533927452782513363
 GameObject:
   m_ObjectHideFlags: 0
@@ -5242,7 +5242,7 @@ Transform:
   m_GameObject: {fileID: 7438231494302996788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.876, z: 0}
+  m_LocalPosition: {x: 0, y: 0.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5589,8 +5589,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.2642165, y: 0.41113907, z: 1}
+  m_Center: {x: 0.36789143, y: 0.0015109926, z: -0.0000000055351346}
 --- !u!114 &5248038003466563037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6373,7 +6373,8 @@ GameObject:
   - component: {fileID: 8789157204763414836}
   - component: {fileID: 7106952794182454159}
   - component: {fileID: 5702174929493355906}
-  - component: {fileID: 2847169178001655297}
+  - component: {fileID: 3224167218139902103}
+  - component: {fileID: 4308528109663068401}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -6464,15 +6465,15 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.3230679
+  m_Height: 0.8968201
   m_Direction: 1
-  m_Center: {x: 0, y: 0.33846712, z: 0}
---- !u!114 &2847169178001655297
+  m_Center: {x: 0, y: 0.55159223, z: 0}
+--- !u!114 &3224167218139902103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6481,7 +6482,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8633886644917928178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a3771314e23a2646886db391d9f10e4, type: 3}
+  m_Script: {fileID: 11500000, guid: c1813e739d4786247a65539be4d76c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: {fileID: 4308528109663068401}
+--- !u!114 &4308528109663068401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8633886644917928178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe69b7bd6aea6e448091d7235ae6050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3

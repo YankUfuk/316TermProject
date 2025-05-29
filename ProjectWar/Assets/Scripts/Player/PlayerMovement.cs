@@ -8,18 +8,18 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f; 
     public float gravity = -9.81f * 2;
     public float jumpHeight = 3f;
-    
+
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-    
+
     Vector3 velocity;
-    
+
     bool isGrounded;
     bool isMoving;
-    
-    private Vector3 lastPosition = new Vector3(0, 0, 0);
-    
+
+    private Vector3 lastPosition;
+
     #endregion
 
     #region Unity Functions
@@ -27,48 +27,39 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        lastPosition = transform.position;
     }
 
     void Update()
     {
+        // --- Ground Check ---
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f; // Reset the vertical velocity when grounded
+            velocity.y = -2f; // Reset vertical velocity when grounded
         }
-        
+
+        // --- Movement ---
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * x + transform.forward * z; // Calculate the movement direction
-        
-        // Move the character 
-        controller.Move(move * speed * Time.deltaTime); 
 
-        // Check if the player can jump
+        Vector3 move = transform.right * x + transform.forward * z;
+        controller.Move(move * speed * Time.deltaTime);
+
+        // --- Jump ---
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            // Calculate the jump velocity
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); 
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-        
-        // falling down
-        velocity.y += gravity * Time.deltaTime; 
-        
-        controller.Move(velocity * Time.deltaTime); // Apply the vertical velocity to the character controller
 
-        if (lastPosition != gameObject.transform.position && isGrounded == true)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
-            
-        }
-        
-        lastPosition = gameObject.transform.position;
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
+        isMoving = (lastPosition != transform.position && isGrounded);
+
+        lastPosition = transform.position;
     }
 
     #endregion
-    
 }

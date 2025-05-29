@@ -9,5 +9,5 @@ public class UnitControlSetup : MonoBehaviour
     public MonoBehaviour[]  controllers;
 
     [Tooltip("If this prefab has a Health component with OnDeath, drag it here.")]
-    public EnemyHealth           health;
+    public PlayerHealth           health;
 }

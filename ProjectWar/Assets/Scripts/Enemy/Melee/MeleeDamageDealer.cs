@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class MeleeDamageDealer : MonoBehaviour
 {
-    [Header("Damage Settings")]
-    public int damageToUnits = 1;
+    [Header("Damage Settings")] public int damageToUnits = 1;
     public int damageToBases = 3;
     public float damageCooldown = 1f;
 
@@ -37,20 +36,16 @@ public class MeleeDamageDealer : MonoBehaviour
 
         lastDamageTime = Time.time;
 
-        // Damage enemy unit
-        if (collision.gameObject.CompareTag(enemyTag) &&
-            collision.gameObject.TryGetComponent<EnemyHealth>(out var enemyHealth))
+        // Make sure only the player takes damage from enemies
+        if (CompareTag("TroopEnemy") && collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"{name} collided with {collision.gameObject.name} (tag: {collision.gameObject.tag})");
+            if (collision.gameObject.TryGetComponent<PlayerHealth>(out var playerHealth))
+            {
+                playerHealth.TakeDamage(damageToUnits);
+            }
 
-            enemyHealth.TakeDamage(damageToUnits);
+
         }
 
-        // Damage enemy base
-        if (collision.gameObject.CompareTag(enemyBaseTag) &&
-            collision.gameObject.TryGetComponent<BaseHealth>(out var baseHealth))
-        {
-            baseHealth.TakeDamage(damageToBases);
-        }
     }
 }

@@ -72,7 +72,8 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         UpdateMode();
-        UpdateCrosshair(); 
+        UpdateCrosshair();
+
         if (weaponClass == WeaponClass.Tank)
         {
             HandleTankMovement();
@@ -80,22 +81,27 @@ public class Weapon : MonoBehaviour
             OrbitTankCamera();    
         }
 
-        // Ranged input (player or tank)
         if (currentShootingMode == ShootingMode.Auto)
             isShooting = Input.GetKey(KeyCode.Mouse0);
         else
             isShooting = Input.GetKeyDown(KeyCode.Mouse0);
 
+        Debug.Log($"WeaponClass: {weaponClass}, isShooting: {isShooting}, readyToShoot: {readyToShoot}");
+
         if (readyToShoot && isShooting)
         {
             burstBulletsLeft = bulletsPerBurst;
+            Debug.Log("Triggering FireWeapon()");
             FireWeapon();
         }
 
-        // Melee input
         if (weaponClass == WeaponClass.Melee && Input.GetKeyDown(meleeKey) && readyToMelee)
+        {
+            Debug.Log("Melee triggered.");
             StartCoroutine(PerformMelee());
+        }
     }
+
 
     private void UpdateMode()
     {
@@ -135,11 +141,29 @@ public class Weapon : MonoBehaviour
 
     private void FireWeapon()
     {
+        if (activePrefab == null || activeSpawn == null)
+        {
+            Debug.LogWarning("FireWeapon failed: activePrefab or activeSpawn is null.");
+            return;
+        }
+
         readyToShoot = false;
+
         Vector3 dir = CalculateDirectionAndSpread().normalized;
-        
+        Debug.Log($"Firing projectile from {activeSpawn.name} in direction {dir}");
+
         var proj = Instantiate(activePrefab, activeSpawn.position, Quaternion.LookRotation(dir));
-        proj.GetComponent<Rigidbody>().AddForce(dir * bulletVelocity, ForceMode.Impulse);
+        Rigidbody rb = proj.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogWarning("Projectile has no Rigidbody.");
+        }
+        else
+        {
+            rb.AddForce(dir * bulletVelocity, ForceMode.Impulse);
+            Debug.Log($"Applied force: {dir * bulletVelocity}");
+        }
+
         StartCoroutine(DestroyAfter(proj, bulletPrefabLifeTime));
 
         if (allowReset)
@@ -151,9 +175,11 @@ public class Weapon : MonoBehaviour
         if (currentShootingMode == ShootingMode.Burst && burstBulletsLeft > 1)
         {
             burstBulletsLeft--;
+            Debug.Log($"Burst shot remaining: {burstBulletsLeft}, re-invoking FireWeapon after delay.");
             Invoke(nameof(FireWeapon), shootingDelay);
         }
     }
+
 
     private void ResetShot()
     {
@@ -163,37 +189,46 @@ public class Weapon : MonoBehaviour
 
     private Vector3 CalculateDirectionAndSpread()
     {
-        // If we’re in tank mode, base our shot on the turret’s forward vector:
         if (weaponClass == WeaponClass.Tank && tankTurret != null)
         {
-            // Start with the exact barrel forward
             Vector3 dir = tankTurret.forward;
+            Debug.DrawRay(tankShellSpawn.position, dir * 10f, Color.red, 1f);
 
-            // Cast out to see if we hit something
-            Ray ray = new Ray(tankShellSpawn.position, dir);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(tankShellSpawn.position, dir, out RaycastHit hit))
+            {
+                Debug.Log($"Tank ray hit: {hit.collider.name} at {hit.point}");
                 dir = (hit.point - tankShellSpawn.position).normalized;
+            }
 
-            // Add tank‐spread (optional)
             dir += new Vector3(
                 Random.Range(-spreadIntensity, spreadIntensity),
                 Random.Range(-spreadIntensity, spreadIntensity),
                 Random.Range(-spreadIntensity, spreadIntensity)
             );
+
             return dir.normalized;
         }
 
-        // Else (player mode), fallback to camera‐center ray
         var camRay = activeCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         if (Physics.Raycast(camRay, out var camHit))
+        {
+            Debug.Log($"Player ray hit: {camHit.collider.name} at {camHit.point}");
             camRay.direction = (camHit.point - activeSpawn.position);
+        }
+        else
+        {
+            Debug.Log("Player ray hit nothing.");
+        }
+
         camRay.direction += new Vector3(
             Random.Range(-spreadIntensity, spreadIntensity),
             Random.Range(-spreadIntensity, spreadIntensity),
             0
         );
+
         return camRay.direction.normalized;
     }
+
     private void OrbitTankCamera()
     {
         if (tankCamera == null || tankBody == null || activeCamera != tankCamera) 

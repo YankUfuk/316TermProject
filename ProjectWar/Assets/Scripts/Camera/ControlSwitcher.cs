@@ -6,7 +6,7 @@ public class ControlSwitcher : MonoBehaviour
     [Header("RTS Mode")]
     public Camera         rtsCamera;
     public MonoBehaviour[] rtsControllers;
-
+    public event Action OnDeath;
     [Header("Player Modes (0…N–1)")]
     [Tooltip("Set Size = number of different unit types you can possess.")]
     public ControlMode[]  modes;
@@ -99,5 +99,9 @@ public class ControlSwitcher : MonoBehaviour
     void OnUnitDeath()
     {
         SwitchTo(-1);
+    }public void Die()
+    {
+        OnDeath?.Invoke();
+        // Additional death logic...
     }
 }
